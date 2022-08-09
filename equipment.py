@@ -40,9 +40,6 @@ class Equipment:
 
     def get_weapon(self, weapon_name) -> Weapon:
         return [weapon for weapon in self.equipment.weapons if weapon.name == weapon_name][0]
-        # for weapon in self.equipment.weapons:
-        #     if weapon.name == weapon_name:
-        #         return weapon
 
     def get_armor(self, armor_name) -> Armor:
         return [armor for armor in self.equipment.armors if armor.name == armor_name][0]

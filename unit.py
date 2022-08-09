@@ -32,11 +32,11 @@ class BaseUnit(ABC):
 
     def equip_weapon(self, weapon: Weapon):
         self.weapon = weapon
-        return f"{self.name} экипирован оружием {self.weapon.name}"
+        return f"{self.name.title()} экипирован оружием {self.weapon.name}"
 
     def equip_armor(self, armor: Armor):
         self.armor = armor
-        return f"{self.name} экипирован броней {self.armor.name}"
+        return f"{self.name.title()} экипирован броней {self.armor.name}"
 
     def _count_damage(self, target: BaseUnit) -> int:
         damage = self.weapon.damage * self.unit_class.attack
@@ -73,7 +73,7 @@ class BaseUnit(ABC):
         и уже эта функция вернем нам строку которая характеризует выполнение умения
         """
         if self._is_skill_used:
-            return "Навык использован."
+            return f"Навык {self.unit_class.skill.name} уже был использован!"
         else:
             self._is_skill_used = True
             return self.unit_class.skill.use(user=self, target=target)
@@ -91,9 +91,9 @@ class PlayerUnit(BaseUnit):
         if self.stamina >= self.weapon.stamina_per_hit * self.unit_class.stamina:
             damage = self._count_damage(target)
             if damage:
-                return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона."
-            return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
-        return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
+                return f"{self.name.title()}, используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона."
+            return f"{self.name.title()}, используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
+        return f"{self.name.title()} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
 
 
 class EnemyUnit(BaseUnit):
@@ -104,6 +104,6 @@ class EnemyUnit(BaseUnit):
         elif self.stamina >= self.weapon.stamina_per_hit * self.unit_class.stamina:
             damage = self._count_damage(target)
             if damage:
-                return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона."
-            return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
-        return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
+                return f"{self.name.title()}, используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона."
+            return f"{self.name.title()}, используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
+        return f"{self.name.title()} попытался использовать {self.weapon.name}, но у него не хватило выносливости."

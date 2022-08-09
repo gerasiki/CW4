@@ -49,30 +49,30 @@ class Skill(ABC):
 
 
 class FuryPunch(Skill):
-    name = "Свирепый пинок"
+    name = "СВИРЕПЫЙ ПИНОК"
     stamina = 6
     damage = 12
 
 
 class HardShot(Skill):
-    name = "Мощный укол"
+    name = "МОЩНЫЙ УКОЛ"
     stamina = 5
     damage = 15
 
 
 class Superpower(Skill):
-    name = "Свои кулачки"
+    name = "СВОИ КУЛАЧКИ"
     stamina = 6
     damage = 13
 
 
 class Imbagun(Skill):
-    name = "Пушку-имбушку"
+    name = "ПУШКА-ИМБУШКА"
     stamina = 10
     damage = 22
 
 
 class BookStrike(Skill):
-    name = "Знания из книги"
+    name = "ЗНАНИЯ ИЗ КНИГИ"
     stamina = 4
     damage = 16

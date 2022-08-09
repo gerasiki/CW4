@@ -33,17 +33,11 @@ def hit():
         res = arena.player_hit()
         return render_template("fight.html", heroes=heroes, result=res)
     else:
-        return render_template("fight.html", heroes=heroes, result=arena.winner)
-    # TODO кнопка нанесения удара
-    # TODO обновляем экран боя (нанесение удара) (шаблон fight.html)
-    # TODO если игра идет - вызываем метод player.hit() экземпляра класса арены
-    # TODO если игра не идет - пропускаем срабатывание метода (просто рендерим шаблон с текущими данными)
+        return render_template("fight.html", heroes=heroes, winner=arena._end_game())
 
 
 @app.route("/fight/use-skill")
 def use_skill():
-    # TODO кнопка использования скилла
-    # TODO логика пркатикчески идентична предыдущему эндпоинту
     if arena.game_is_running:
         res = arena.player_use_skill()
         return render_template("fight.html", heroes=heroes, result=res)
@@ -58,14 +52,10 @@ def pass_turn():
         return render_template("fight.html", heroes=heroes, result=res)
     else:
         return render_template("fight.html", heroes=heroes, result=arena.winner)
-    # TODO кнопка пропуск хода
-    # TODO логика практически идентична предыдущему эндпоинту
-    # TODO однако вызываем здесь функцию следующий ход (arena.next_turn())
 
 
 @app.route("/fight/end-fight")
 def end_fight():
-    # TODO кнопка завершить игру - переход в главное меню
     return render_template("index.html", heroes=heroes)
 
 
@@ -83,8 +73,6 @@ def choose_hero():
             "weapons": weapons,
             "armors": armors
         })
-    # TODO кнопка выбор героя. 2 метода GET и POST
-    # TODO на GET отрисовываем форму.
 
     if request.method == "POST":
         equipment = Equipment()
@@ -101,8 +89,6 @@ def choose_hero():
         heroes["player"] = player
         return redirect(url_for("choose_enemy"))
 
-    # TODO на POST отправляем форму и делаем редирект на эндпоинт choose enemy
-
 
 @app.route("/choose-enemy/", methods=['post', 'get'])
 def choose_enemy():
@@ -118,8 +104,6 @@ def choose_enemy():
             "weapons": weapons,
             "armors": armors
         })
-    # TODO кнопка выбор соперников. 2 метода GET и POST
-    # TODO также на GET отрисовываем форму.
 
     if request.method == "POST":
         equipment = Equipment()
@@ -135,7 +119,6 @@ def choose_enemy():
 
         heroes["enemy"] = enemy
         return redirect(url_for("start_fight"))
-    # TODO а на POST отправляем форму и делаем редирект на начало битвы
 
 
 if __name__ == "__main__":

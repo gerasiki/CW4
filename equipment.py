@@ -1,9 +1,11 @@
-from dataclasses import dataclass
-from typing import List
-from random import uniform
-import marshmallow_dataclass
-import marshmallow
 import json
+import os.path
+from dataclasses import dataclass
+from random import uniform
+from typing import List
+
+import marshmallow
+import marshmallow_dataclass
 
 
 @dataclass
@@ -52,7 +54,7 @@ class Equipment:
 
     @staticmethod
     def _get_equipment_data() -> EquipmentData:
-        equipment_file = open(r"C:\Users\Honor\PycharmProjects\CW4\data\equipment.json", encoding='utf-8')
+        equipment_file = open(os.path.abspath("data\equipment.json"), encoding='utf-8')
         data = json.load(equipment_file)
         equipment_schema = marshmallow_dataclass.class_schema(EquipmentData)
         try:

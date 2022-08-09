@@ -60,3 +60,19 @@ class HardShot(Skill):
     damage = 15
 
 
+class Superpower(Skill):
+    name = "Свои кулачки"
+    stamina = 6
+    damage = 13
+
+
+class Imbagun(Skill):
+    name = "Пушку-имбушку"
+    stamina = 10
+    damage = 22
+
+
+class BookStrike(Skill):
+    name = "Знания из книги"
+    stamina = 4
+    damage = 16

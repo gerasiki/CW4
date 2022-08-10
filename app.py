@@ -22,8 +22,6 @@ def menu_page():
 
 @app.route("/fight/")
 def start_fight():
-    # TODO выполняем функцию start_game экземпляра класса арена и передаем ему необходимые аргументы
-    # TODO рендерим экран боя (шаблон fight.html)
     arena.start_game(player=heroes.get("player"), enemy=heroes.get("enemy"))
     return render_template("fight.html", heroes=heroes, result='Да начнётся бой!')
 

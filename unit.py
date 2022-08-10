@@ -13,9 +13,6 @@ class BaseUnit(ABC):
     Базовый класс юнита
     """
     def __init__(self, name: str, unit_class: UnitClass):
-        """
-        При инициализации класса Unit используем свойства класса UnitClass
-        """
         self.name = name
         self.unit_class = unit_class
         self.hp = unit_class.max_health
@@ -65,15 +62,7 @@ class BaseUnit(ABC):
         """
         pass
 
-    def use_skill(self, target: BaseUnit) -> str:
-        """
-        метод использования умения.
-        если умение уже использовано возвращаем строку
-        Навык использован
-        Если же умение не использовано тогда выполняем функцию
-        self.unit_class.skill.use(user=self, target=target)
-        и уже эта функция вернем нам строку которая характеризует выполнение умения
-        """
+    def use_skill(self, target: BaseUnit):
         if self._is_skill_used:
             return f"Навык {self.unit_class.skill.name} уже был использован!"
         else:
@@ -83,13 +72,7 @@ class BaseUnit(ABC):
 
 class PlayerUnit(BaseUnit):
 
-    def hit(self, target: BaseUnit) -> str:
-        """
-        функция удар игрока:
-        здесь происходит проверка достаточно ли выносливости для нанесения удара.
-        вызывается функция self._count_damage(target)
-        а также возвращается результат в виде строки
-        """
+    def hit(self, target: BaseUnit):
         if self.stamina >= self.weapon.stamina_per_hit * self.unit_class.stamina:
             damage = self._count_damage(target)
             if damage:
@@ -100,7 +83,7 @@ class PlayerUnit(BaseUnit):
 
 class EnemyUnit(BaseUnit):
 
-    def hit(self, target: BaseUnit) -> str:
+    def hit(self, target: BaseUnit):
         if randint(0, 8) == 7 and self.stamina >= self.unit_class.skill.stamina and not self._is_skill_used:
             return self.use_skill(target)
         elif self.stamina >= self.weapon.stamina_per_hit * self.unit_class.stamina:

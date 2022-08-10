@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from random import uniform
 from typing import List
 
-import marshmallow
-import marshmallow_dataclass
+import marshmallow # type: ignore
+import marshmallow_dataclass # type: ignore
 
 
 @dataclass

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from unit import BaseUnit
@@ -29,7 +29,7 @@ class Skill(ABC):
     def damage(self):
         pass
 
-    def skill_effect(self) -> str:
+    def skill_effect(self):
         self.target.get_damage(self.damage)
         self.user.stamina -= self.stamina
         return f"{self.user.name} использует {self.name} и наносит {self.damage} урона сопернику."

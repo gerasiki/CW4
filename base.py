@@ -1,10 +1,12 @@
+from typing import Optional
+
 from unit import BaseUnit
 
 
 class BaseSingleton(type):
-    _instances = {}
+    _instances: dict = {}
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls, *args, **kwargs) -> dict:
         if cls not in cls._instances:
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
@@ -13,16 +15,16 @@ class BaseSingleton(type):
 
 class Arena(metaclass=BaseSingleton):
     STAMINA_PER_ROUND = 1
-    player = None
-    enemy = None
+    player = BaseUnit
+    enemy = BaseUnit
     game_is_running = False
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player, enemy) -> None:
         self.game_is_running = True
         self.player = player
         self.enemy = enemy
 
-    def _check_players_hp(self) -> str:
+    def _check_players_hp(self) -> Optional[str]:
         if self.player.hp <= 0 >= self.enemy.hp:
             self.winner = "Ничья!"
             return self._end_game()
@@ -32,6 +34,7 @@ class Arena(metaclass=BaseSingleton):
         elif self.enemy.hp <= 0:
             self.winner = f"{self.player.name.title()} выиграл битву!"
             return self._end_game()
+        return None
 
     def _stamina_regeneration(self):
         if self.player.stamina + self.STAMINA_PER_ROUND > self.player.unit_class.max_stamina:
@@ -54,13 +57,13 @@ class Arena(metaclass=BaseSingleton):
             self.enemy.hp = round(self.enemy.hp, 1)
             return self.enemy.hit(self.player)
 
-    def _end_game(self):
+    def _end_game(self) -> str:
         result = f"{self.winner}"
         self.game_is_running = False
-        self._instances = {}
+        self._instances: dict = {}
         return result
 
-    def player_hit(self) -> str:
+    def player_hit(self):
         player_hit = self.player.hit(self.enemy)
         enemy_hit = self.next_turn()
         return f'{player_hit}\n{enemy_hit}'

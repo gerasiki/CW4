@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-from base import Arena
+from base import Arena, BaseSingleton
 from classes import unit_classes
 from equipment import Equipment
 from unit import BaseUnit, EnemyUnit, PlayerUnit

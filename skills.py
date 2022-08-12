@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from unit import BaseUnit
@@ -29,12 +29,15 @@ class Skill(ABC):
     def damage(self):
         pass
 
-    def skill_effect(self):
+    def skill_effect(self, user: BaseUnit, target: BaseUnit) -> str:
+        self.user = user
+        self.target = target
         self.target.get_damage(self.damage)
         self.user.stamina -= self.stamina
         return f"{self.user.name} использует {self.name} и наносит {self.damage} урона сопернику."
 
-    def _is_stamina_enough(self):
+    def _is_stamina_enough(self, user: BaseUnit) -> bool:
+        self.user = user
         return self.user.stamina > self.stamina
 
     def use(self, user: BaseUnit, target: BaseUnit) -> str:
@@ -45,7 +48,7 @@ class Skill(ABC):
         self.user = user
         self.target = target
         if self._is_stamina_enough:
-            return self.skill_effect()
+            return self.skill_effect(user, target)
         return f"{self.user.name} попытался использовать {self.name} но у него не хватило выносливости."
 
 

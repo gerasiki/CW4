@@ -22,18 +22,18 @@ class BaseUnit(ABC):
         self._is_skill_used = False
 
     @property
-    def health_points(self):
+    def health_points(self) -> float:
         return round(self.hp, 1)
 
     @property
-    def stamina_points(self):
+    def stamina_points(self) -> float:
         return round(self.stamina, 1)
 
-    def equip_weapon(self, weapon: Weapon):
+    def equip_weapon(self, weapon: Weapon) -> str:
         self.weapon = weapon
         return f"{self.name.title()} экипирован оружием {self.weapon.name}"
 
-    def equip_armor(self, armor: Armor):
+    def equip_armor(self, armor: Armor) -> str:
         self.armor = armor
         return f"{self.name.title()} экипирован броней {self.armor.name}"
 
@@ -62,7 +62,7 @@ class BaseUnit(ABC):
         """
         pass
 
-    def use_skill(self, target: BaseUnit):
+    def use_skill(self, target: BaseUnit) -> str:
         if self._is_skill_used:
             return f"Навык {self.unit_class.skill.name} уже был использован!"
         else:
@@ -72,7 +72,7 @@ class BaseUnit(ABC):
 
 class PlayerUnit(BaseUnit):
 
-    def hit(self, target: BaseUnit):
+    def hit(self, target: BaseUnit) -> str:
         if self.stamina >= self.weapon.stamina_per_hit * self.unit_class.stamina:
             damage = self._count_damage(target)
             if damage:
@@ -83,7 +83,7 @@ class PlayerUnit(BaseUnit):
 
 class EnemyUnit(BaseUnit):
 
-    def hit(self, target: BaseUnit):
+    def hit(self, target: BaseUnit) -> str:
         if randint(0, 8) == 7 and self.stamina >= self.unit_class.skill.stamina and not self._is_skill_used:
             return self.use_skill(target)
         elif self.stamina >= self.weapon.stamina_per_hit * self.unit_class.stamina:

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union, Any
 
 from unit import BaseUnit
 
@@ -15,14 +15,16 @@ class BaseSingleton(type):
 
 class Arena(metaclass=BaseSingleton):
     STAMINA_PER_ROUND = 1
-    player = BaseUnit
-    enemy = BaseUnit
     game_is_running = False
 
-    def start_game(self, player, enemy) -> None:
-        self.game_is_running = True
+    def __init__(self):
+        self.player = None
+        self.enemy = None
+
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
         self.player = player
         self.enemy = enemy
+        self.game_is_running = True
 
     def _check_players_hp(self) -> Optional[str]:
         if self.player.hp <= 0 >= self.enemy.hp:
@@ -36,7 +38,7 @@ class Arena(metaclass=BaseSingleton):
             return self._end_game()
         return None
 
-    def _stamina_regeneration(self):
+    def _stamina_regeneration(self) -> None:
         if self.player.stamina + self.STAMINA_PER_ROUND > self.player.unit_class.max_stamina:
             self.player.stamina = self.player.unit_class.max_stamina
         else:
@@ -46,7 +48,7 @@ class Arena(metaclass=BaseSingleton):
         else:
             self.enemy.stamina += self.STAMINA_PER_ROUND
 
-    def next_turn(self):
+    def next_turn(self) -> Union[str, Any]:
         if self._check_players_hp():
             return self._check_players_hp()
         if self.game_is_running:
@@ -56,6 +58,7 @@ class Arena(metaclass=BaseSingleton):
             self.enemy.stamina = round(self.enemy.stamina, 1)
             self.enemy.hp = round(self.enemy.hp, 1)
             return self.enemy.hit(self.player)
+        return None
 
     def _end_game(self) -> str:
         result = f"{self.winner}"
@@ -63,12 +66,12 @@ class Arena(metaclass=BaseSingleton):
         self._instances: dict = {}
         return result
 
-    def player_hit(self):
+    def player_hit(self) -> str:
         player_hit = self.player.hit(self.enemy)
         enemy_hit = self.next_turn()
         return f'{player_hit}\n{enemy_hit}'
 
-    def player_use_skill(self):
+    def player_use_skill(self) -> str:
         player_hit = self.player.use_skill(self.enemy)
         enemy_hit = self.next_turn()
         return f'{player_hit}\n{enemy_hit}'

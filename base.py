@@ -1,6 +1,6 @@
 from typing import Optional, Union, Any
 
-from unit import BaseUnit
+from unit import BaseUnit, PlayerUnit
 
 
 class BaseSingleton(type):
@@ -17,13 +17,11 @@ class Arena(metaclass=BaseSingleton):
     STAMINA_PER_ROUND = 1
     game_is_running = False
 
-    def __init__(self):
-        self.player = None
-        self.enemy = None
-
-    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
+    def __init__(self, player, enemy) -> None:
         self.player = player
         self.enemy = enemy
+
+    def start_game(self):
         self.game_is_running = True
 
     def _check_players_hp(self) -> Optional[str]:
@@ -48,7 +46,7 @@ class Arena(metaclass=BaseSingleton):
         else:
             self.enemy.stamina += self.STAMINA_PER_ROUND
 
-    def next_turn(self) -> Union[str, Any]:
+    def next_turn(self) -> Optional[str]:
         if self._check_players_hp():
             return self._check_players_hp()
         if self.game_is_running:

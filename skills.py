@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from unit import BaseUnit
@@ -16,17 +16,17 @@ class Skill(ABC):
 
     @property
     @abstractmethod
-    def name(self):
+    def name(self) -> Any:
         pass
 
     @property
     @abstractmethod
-    def stamina(self):
+    def stamina(self) -> Any:
         pass
 
     @property
     @abstractmethod
-    def damage(self):
+    def damage(self) -> Any:
         pass
 
     def skill_effect(self, user: BaseUnit, target: BaseUnit) -> str:

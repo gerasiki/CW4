@@ -37,18 +37,16 @@ class BaseUnit(ABC):
         self.armor = armor
         return f"{self.name.title()} экипирован броней {self.armor.name}"
 
-    def _count_damage(self, target: BaseUnit) -> int:
+    def _count_damage(self, target: BaseUnit) -> float:
         damage = self.weapon.damage * self.unit_class.attack
         self.stamina -= self.weapon.stamina_per_hit * self.unit_class.stamina
         if target.stamina > target.armor.stamina_per_turn * target.unit_class.stamina:
             damage = damage - target.armor.defence * target.unit_class.armor
             target.stamina -= target.armor.stamina_per_turn * target.unit_class.stamina
-        else:
-            pass
         damage = target.get_damage(damage)
         return damage
 
-    def get_damage(self, damage: int) -> Optional[int]:
+    def get_damage(self, damage: float) -> Optional[float]:
         if damage > 0:
             self.hp = self.hp - damage
             self.hp = self.hp

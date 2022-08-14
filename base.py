@@ -6,7 +6,7 @@ from unit import BaseUnit
 class BaseSingleton(type):
     _instances: dict = {}
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls, *args: Any, **kwargs: Any) -> Any:
         if cls not in cls._instances:
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
@@ -16,12 +16,12 @@ class BaseSingleton(type):
 class Arena(metaclass=BaseSingleton):
     STAMINA_PER_ROUND = 1
 
-    def __init__(self):
+    def __init__(self):  # type: ignore
         self.enemy = None
         self.player = None
         self.game_is_running = False
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> Any:
+    def start_game(self, player: Optional[BaseUnit], enemy: Optional[BaseUnit]) -> Any:
         self.enemy = enemy
         self.player = player
         self.game_is_running = True

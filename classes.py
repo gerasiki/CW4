@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import Dict, Any
+
 from skills import Skill, FuryPunch, HardShot, Superpower, BookStrike, Imbagun
 
 
@@ -13,7 +15,7 @@ class UnitClass:
     skill: Skill
 
 
-WarriorClass = UnitClass(
+WarriorClass: UnitClass = UnitClass(
     name="Воин",
     max_health=60.0,
     max_stamina=30.0,
@@ -23,7 +25,7 @@ WarriorClass = UnitClass(
     skill=FuryPunch()
 )
 
-ThiefClass = UnitClass(
+ThiefClass: UnitClass = UnitClass(
     name="Вор",
     max_health=50.0,
     max_stamina=25.0,
@@ -33,7 +35,7 @@ ThiefClass = UnitClass(
     skill=HardShot()
 )
 
-WarlockClass = UnitClass(
+WarlockClass: UnitClass = UnitClass(
     name="Колдун",
     max_health=45.0,
     max_stamina=35.0,
@@ -43,7 +45,7 @@ WarlockClass = UnitClass(
     skill=BookStrike()
 )
 
-SuperheroClass = UnitClass(
+SuperheroClass: UnitClass = UnitClass(
     name="Супергерой",
     max_health=55.0,
     max_stamina=30.0,
@@ -53,7 +55,7 @@ SuperheroClass = UnitClass(
     skill=Superpower()
 )
 
-CheaterClass = UnitClass(
+CheaterClass: UnitClass = UnitClass(
     name="Читер",
     max_health=50.0,
     max_stamina=30.0,
@@ -63,11 +65,10 @@ CheaterClass = UnitClass(
     skill=Imbagun()
 )
 
-unit_classes = {
+unit_classes: Dict[str, UnitClass] = {
     ThiefClass.name: ThiefClass,
     WarriorClass.name: WarriorClass,
     WarlockClass.name: WarlockClass,
     SuperheroClass.name: SuperheroClass,
     CheaterClass.name: CheaterClass
 }
-

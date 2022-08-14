@@ -46,12 +46,11 @@ class BaseUnit(ABC):
         damage = target.get_damage(damage)
         return damage
 
-    def get_damage(self, damage: float) -> Optional[float]:
+    def get_damage(self, damage: float) -> float:
         if damage > 0:
             self.hp = self.hp - damage
             self.hp = self.hp
-            return round(damage, 1)
-        return None
+        return round(damage, 1)
 
     @abstractmethod
     def hit(self, target: BaseUnit) -> str:

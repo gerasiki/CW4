@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Any
 
 from unit import BaseUnit
 
@@ -6,7 +6,7 @@ from unit import BaseUnit
 class BaseSingleton(type):
     _instances: dict = {}
 
-    def __call__(cls, *args, **kwargs) -> Dict[str, object]:
+    def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
@@ -21,7 +21,7 @@ class Arena(metaclass=BaseSingleton):
         self.player = None
         self.game_is_running = False
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> Any:
         self.enemy = enemy
         self.player = player
         self.game_is_running = True

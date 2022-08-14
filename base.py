@@ -1,12 +1,12 @@
-from typing import Optional, Union, Any
+from typing import Optional, Dict
 
-from unit import BaseUnit, PlayerUnit
+from unit import BaseUnit
 
 
 class BaseSingleton(type):
     _instances: dict = {}
 
-    def __call__(cls, *args, **kwargs) -> dict:
+    def __call__(cls, *args, **kwargs) -> Dict[str, object]:
         if cls not in cls._instances:
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
@@ -15,13 +15,15 @@ class BaseSingleton(type):
 
 class Arena(metaclass=BaseSingleton):
     STAMINA_PER_ROUND = 1
-    game_is_running = False
 
-    def __init__(self, player, enemy) -> None:
-        self.player = player
+    def __init__(self):
+        self.enemy = None
+        self.player = None
+        self.game_is_running = False
+
+    def start_game(self, player: BaseUnit, enemy: BaseUnit):
         self.enemy = enemy
-
-    def start_game(self):
+        self.player = player
         self.game_is_running = True
 
     def _check_players_hp(self) -> Optional[str]:

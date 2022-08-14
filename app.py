@@ -1,21 +1,20 @@
-from typing import Any
+from typing import Any, Dict
 
 from flask import Flask, render_template, request, redirect, url_for
 
 from base import Arena
-from classes import unit_classes, UnitClass
+from classes import unit_classes
 from equipment import Equipment
 from unit import BaseUnit, EnemyUnit, PlayerUnit
 
 app = Flask(__name__, template_folder='templates')
 
-heroes = {
+heroes: dict = {
     "player": BaseUnit,
     "enemy": BaseUnit
 }
 
-arena = Arena(player=heroes.get("player"), enemy=heroes.get("enemy"))
-
+arena = Arena()
 
 @app.route("/")
 def menu_page():
@@ -23,8 +22,8 @@ def menu_page():
 
 
 @app.route("/fight/")
-def start_fight() -> Any:
-    arena.start_game()
+def start_fight():
+    arena.start_game(player=heroes.get("player"), enemy=heroes.get("enemy"))
     return render_template("fight.html", heroes=heroes, result='Да начнётся бой!')
 
 

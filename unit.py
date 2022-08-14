@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from random import randint
-from typing import Optional
 
 from classes import UnitClass
 from equipment import Equipment, Weapon, Armor

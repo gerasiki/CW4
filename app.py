@@ -1,9 +1,9 @@
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from flask import Flask, render_template, request, redirect, url_for
 
 from base import Arena
-from classes import unit_classes, UnitClass
+from classes import unit_classes
 from equipment import Equipment
 from unit import BaseUnit, EnemyUnit, PlayerUnit
 

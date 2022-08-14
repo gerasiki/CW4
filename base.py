@@ -21,7 +21,7 @@ class Arena(metaclass=BaseSingleton):
         self.player = None
         self.game_is_running = False
 
-    def start_game(self, player: Optional[BaseUnit], enemy: Optional[BaseUnit]) -> Any:
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> Any:
         self.enemy = enemy
         self.player = player
         self.game_is_running = True

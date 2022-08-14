@@ -24,7 +24,7 @@ def menu_page() -> object:
 
 @app.route("/fight/")
 def start_fight() -> object:
-    arena.start_game(player=heroes.get("player"), enemy=heroes.get("enemy"))
+    arena.start_game(player=heroes["player"], enemy=heroes["enemy"])
     return render_template("fight.html", heroes=heroes, result='Да начнётся бой!')
 
 
